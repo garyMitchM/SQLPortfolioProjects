@@ -17,7 +17,7 @@ FROM
 	;
 
 
---Looking at total cases vs total desths and the percent of deaths in the United Stated 
+--Looking at total cases vs total deaths and the percent of deaths in the United Stated 
 SELECT
 	  dea.location 
 	, dea.date 
