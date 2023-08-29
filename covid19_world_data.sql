@@ -81,7 +81,7 @@ ORDER BY
 	;
 
 
---Looking at contintents with the highest death count per population
+--Looking at continents with the highest death count per population
 SELECT 
 	  dea.location  
 	, MAX(CAST (dea.Total_deaths as int)) as TotalDeathCount
