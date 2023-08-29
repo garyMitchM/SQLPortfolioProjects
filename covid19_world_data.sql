@@ -6,7 +6,7 @@ Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, 
 
 --Select data that we are going to be using
 SELECT 
-	  location 
+	  dea.location 
 	, dea.date 
 	, dea.total_cases 
 	, dea.new_cases 
@@ -19,7 +19,7 @@ FROM
 
 --Looking at total cases vs total desths and the percent of deaths in the United Stated 
 SELECT
-	  location 
+	  dea.location 
 	, dea.date 
 	, dea.total_cases 
 	, dea.total_deaths 
