@@ -69,44 +69,91 @@ INSERT INTO photo_tags(photo_id, tag_id) VALUES (1, 18), (1, 17), (1, 21), (1, 1
 
 
 -- Finding the 5 oldest users 
-SELECT * FROM users
-ORDER BY created_at LIMIT 5;
+SELECT 
+    * 
+FROM 
+    users
+ORDER BY 
+    created_at 
+LIMIT 5
+    ;
 
 -- Which day do most users register on?
 SELECT 
-DAYNAME(created_at) AS day,
-COUNT(*) AS total
-FROM users 
-GROUP BY day
-ORDER BY total DESC;
+      DAYNAME(u.created_at) AS day
+    , COUNT(*) AS total
+FROM 
+    users u
+GROUP BY
+    day
+ORDER BY
+    total DESC
+    ;
 
 -- Users who have never posted any photos
-SELECT username FROM users
-LEFT JOIN photos
-ON users.id = photos.user_id
-WHERE photos.id IS NULL;
+SELECT 
+    u.username 
+FROM 
+    users u
+LEFT JOIN photos p
+    ON u.id = p.user_id
+WHERE 
+    1=1
+    AND p.id IS NULL
+    ;
 
 -- Which photo has the most number of likes and which user posted it?
-SELECT username, photos.id, photos.image_url, COUNT(*) AS total FROM photos
-JOIN likes ON photos.id = likes.photo_id
-JOIN users ON users.id = photos.user_id
-GROUP BY photos.id, photos.image_url
-ORDER BY total DESC LIMIT 1;
+SELECT 
+      u.username 
+    , p.id 
+    , p.image_url 
+    , COUNT(*) AS total 
+FROM 
+    photos p
+JOIN likes l 
+    ON p.id = l.photo_id
+JOIN users u
+    ON u.id = p.user_id
+GROUP BY 
+    p.id 
+    , p.image_url
+ORDER BY 
+    total DESC 
+LIMIT 1
+    ;
 
 -- What is the average number of posts per user?
-SELECT (SELECT COUNT(*) FROM photos) / (SELECT COUNT(*) FROM users); 
+SELECT 
+    (SELECT COUNT(*) FROM photos) 
+    / 
+    (SELECT COUNT(*) FROM users)
+    ; 
 
 -- What are the 5 most popular tags?
-SELECT tags.tag_name, COUNT(*) AS total FROM photo_tags
-JOIN tags ON photo_tags.tag_id = tags.id
-GROUP BY tags.id
-ORDER BY total DESC LIMIT 5;
+SELECT 
+      t.tag_name
+    , COUNT(*) AS total 
+FROM 
+    photo_tags pt
+JOIN tags t
+    ON pt.tag_id = t.id
+GROUP BY 
+    t.id
+ORDER BY 
+    total DESC 
+LIMIT 5
+    ;
 
 -- Finding bot accounts: Users who have liked every single photo
-SELECT username, COUNT(*) AS total_likes FROM users 
-JOIN likes ON users.id = likes.user_id
-GROUP BY username
-HAVING total_likes = (SELECT COUNT(*) FROM photos);
-
-
-
+SELECT 
+      u.username
+    , COUNT(*) AS total_likes 
+FROM 
+    users u
+JOIN likes l
+    ON u.id = l.user_id
+GROUP BY 
+    u.username
+HAVING 
+    total_likes = (SELECT COUNT(*) FROM photos)
+    ;
